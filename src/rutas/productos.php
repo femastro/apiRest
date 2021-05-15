@@ -5,7 +5,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 $app = new \Slim\App;
 
 $app->get('/productos/neumaticos', function(Request $request, Response $response){
-  $sql = "SELECT * FROM stockneumaticos where 1";
+  $sql = "SELECT * FROM stockneumaticos";
   try{
     $db = new db();
     $db = $db->conectDB();
