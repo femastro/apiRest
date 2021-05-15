@@ -91,7 +91,7 @@ $app->post('/productos/neumaticos/nuevo', function(Request $request, Response $r
   }
 });
 
-// DELETE borar cliente 
+// DELETE borar Articulo
 $app->delete('/productos/neumaticos/delete/{id}', function(Request $request, Response $response){
     
    $id = $request->getAttribute('id');
@@ -116,7 +116,7 @@ $app->delete('/productos/neumaticos/delete/{id}', function(Request $request, Res
   }
 }); 
 
-// PUT Modificar cliente 
+// PUT Modificar Articulo 
 $app->put('/productos/neumaticos/modificar/{id}', function(Request $request, Response $response){
 
     $id = $request->getAttribute('id');
