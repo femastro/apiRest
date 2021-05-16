@@ -28,6 +28,7 @@ $app->get('/productos/neumaticos', function(Request $request, Response $response
 $app->post('/productos/neumaticos/nuevo', function(Request $request, Response $response){
 
    $cod_Articulo = $request->getParam('cod_Articulo');
+   
    $modelo = $request->getParam('modelo');
    $marca = $request->getParam('marca');
    $medida = $request->getParam('medida');
