@@ -1,5 +1,4 @@
 <?php
-
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
@@ -21,7 +20,7 @@ $app->get('/productos/neumaticos', function(Request $request, Response $response
         $resultado = null;
         $db = null;
     }catch(PDOException $e){
-        echo '{"error" : {"text":'.$e->getMessage().'}';
+        echo 'Error - > {"error" : {"text":'.$e->getMessage().'}';
     }
 });
 

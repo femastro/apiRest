@@ -1,12 +1,3 @@
-#RewriteCond %{REQUEST_METHOD} = GET
-
-#<Location "/public">
-#  Access-Control-Allow-Methods: POST, GET, OPTIONS
-#  AllowMethods GET POST DELETE PUT OPTIONS
-#</Location>
-
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [QSA,L]
-
-

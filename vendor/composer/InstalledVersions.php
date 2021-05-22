@@ -32,7 +32,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '243b321c6e2f2d22e3cecbe4928f9a1272ff0225',
+    'reference' => 'cdd06117f3f4068c773563699705e12896c55309',
     'name' => '__root__',
   ),
   'versions' => 
@@ -44,16 +44,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '243b321c6e2f2d22e3cecbe4928f9a1272ff0225',
-    ),
-    'container-interop/container-interop' => 
-    array (
-      'pretty_version' => '1.2.0',
-      'version' => '1.2.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '79cbf1341c22ec75643d841642dd5d6acd83bdb8',
+      'reference' => 'cdd06117f3f4068c773563699705e12896c55309',
     ),
     'nikic/fast-route' => 
     array (
@@ -100,12 +91,12 @@ private static $installed = array (
     ),
     'slim/slim' => 
     array (
-      'pretty_version' => '3.12.1',
-      'version' => '3.12.1.0',
+      'pretty_version' => '3.12.3',
+      'version' => '3.12.3.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'eaee12ef8d0750db62b8c548016d82fb33addb6b',
+      'reference' => '1c9318a84ffb890900901136d620b4f03a59da38',
     ),
   ),
 );
@@ -288,9 +279,23 @@ return $installed[0]['root'];
 
 
 
+
 public static function getRawData()
 {
+@trigger_error('getRawData only returns the first dataset loaded, which may not be what you expect. Use getAllRawData() instead which returns all datasets for all autoloaders present in the process.', E_USER_DEPRECATED);
+
 return self::$installed;
+}
+
+
+
+
+
+
+
+public static function getAllRawData()
+{
+return self::getInstalled();
 }
 
 
