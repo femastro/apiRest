@@ -1,9 +1,11 @@
 <?php
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token");
 header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header('Access-Control-Allow-Credentials: true');
+header("Access-Control-Allow-Headers: content-type");
+header("Access-Control-Allow-Methods: OPTIONS,GET,PUT,POST,DELETE");
+
 
 require '../vendor/autoload.php';
 require '../src/config/db.php';
