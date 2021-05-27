@@ -127,9 +127,9 @@ $app->delete('/productos/neumaticos/delete/{id}', function(Request $request, Res
         $resultado->execute();
 
         if ($resultado->rowCount() > 0) {
-        echo json_encode("Articulo eliminado.");  
+        echo '{"status":"200","message":"Articulo eliminado."}';  
         }else {
-        echo json_encode("No existe Articulo con este ID.");
+        echo '{"status":"404","message":"No existe Articulo con este ID."}';
         }
 
         $resultado = null;
