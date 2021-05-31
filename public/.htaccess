@@ -3,14 +3,6 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]
 
-#RewriteCond %{REQUEST_METHOD} OPTIONS
-#RewriteRule ^(.*)$ $1 [R=200,L]
-#RewriteCond %{REQUEST_METHOD} = GET POST PUT DELETE
-
-#<Location "/">
-#   Access-Control-Allow-Methods: POST, GET, OPTIONS
-#   AllowMethods GET POST DELETE PUT OPTIONS
-#</Location>
 
 
 

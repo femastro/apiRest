@@ -4,7 +4,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 $app = new \Slim\App;
 
-$app->get('/productos/neumaticos', function(Request $request, Response $response){
+$app->get('/neumaticos', function(Request $request, Response $response){
     $sql = "SELECT * FROM stockneumaticos";
     try{
         $db = new db();
@@ -12,10 +12,10 @@ $app->get('/productos/neumaticos', function(Request $request, Response $response
         $resultado = $db->query($sql);
 
         if ($resultado->rowCount() > 0){
-        $articulos = $resultado->fetchAll(PDO::FETCH_OBJ);
-        echo json_encode($articulos);
+            $articulos = $resultado->fetchAll(PDO::FETCH_OBJ);
+            echo json_encode($articulos);
         }else {
-        echo json_encode("No existen productos en la BBDD.");
+            echo json_encode("No existen articulos en la BBDD.");
         }
         $resultado = null;
         $db = null;
@@ -25,7 +25,7 @@ $app->get('/productos/neumaticos', function(Request $request, Response $response
 });
 
 // GET Recueperar Articulo por ID 
-$app->get('/productos/neumaticos/{id}', function(Request $request, Response $response){
+$app->get('/neumaticos/{id}', function(Request $request, Response $response){
     $id = $request->getAttribute('id');
     $sql = "SELECT * FROM stockneumaticos WHERE id =".$id;
     try{
@@ -34,10 +34,10 @@ $app->get('/productos/neumaticos/{id}', function(Request $request, Response $res
         $resultado = $db->query($sql);
 
         if ($resultado->rowCount() > 0){
-        $articulo = $resultado->fetchAll(PDO::FETCH_OBJ);
-        echo json_encode($articulo);
+            $articulo = $resultado->fetchAll(PDO::FETCH_OBJ);
+            echo json_encode($articulo);
         }else {
-        echo json_encode("No existen articulos en la BBDD con este ID.");
+            echo json_encode("No existen articulos en la BBDD con este ID.");
         }
         $resultado = null;
         $db = null;
@@ -47,19 +47,35 @@ $app->get('/productos/neumaticos/{id}', function(Request $request, Response $res
 }); 
 
 // POST Crear nuevo Articulo 
-$app->post('/productos/neumaticos/nuevo', function(Request $request, Response $response){
+$app->post('/neumaticos/nuevo', function(Request $request, Response $response){
 
-   $cod_Articulo = $request->getParam('cod_Articulo');
-   
-   $modelo = $request->getParam('modelo');
-   $marca = $request->getParam('marca');
-   $medida = $request->getParam('medida');
-   $cod_Proveedor = $request->getParam('cod_Proveedor');
-   $cantidad = $request->getParam('cantidad');
-   $precio = $request->getParam('precio');
-   $precioventa = $request->getParam('precioventa');
-   $ultimocosto = $request->getParam('ultimocosto');
-   $ubicacion = $request->getParam('ubucacion');
+    $sql = "SELECT MAX(cod_Articulo) as codigo FROM neumaticos";
+    try {
+        $db = new db();
+        $db = $db->conectDB();
+        $resultado = $db->query($sql);
+
+        if($resultado->rowCount() > 0 ){
+            $articulo = $resultado->fetchAll(PDO::FETCH_ASSOC);
+            //$codigo = $articulo[0]['codigo'];
+        }
+    } catch (PDOException $e) {
+        echo "Error -> ",$e;
+    }
+    
+    $cod= intval(substr($articulo[0]['codigo'], 1))+1;
+    //$cod_Articulo = $request->getParam('cod_Articulo');
+    $cod_Articulo = "N".$cod;
+
+    $modelo = $request->getParam('modelo');
+    $marca = $request->getParam('marca');
+    $medida = $request->getParam('medida');
+    $cod_Proveedor = $request->getParam('cod_Proveedor');
+    $cantidad = $request->getParam('cantidad');
+    $precio = $request->getParam('precio');
+    $precioventa = $request->getParam('precioventa');
+    $ultimocosto = $request->getParam('ultimocosto');
+    $ubicacion = $request->getParam('ubucacion');
   
     $sql = "INSERT INTO stockneumaticos 
         (   
@@ -112,10 +128,11 @@ $app->post('/productos/neumaticos/nuevo', function(Request $request, Response $r
     }catch(PDOException $e){
         echo '{"error" : {"text":'.$e->getMessage().'}';
     }
+
 });
 
 // DELETE borrar Articulo
-$app->delete('/productos/neumaticos/delete/{id}', function(Request $request, Response $response){
+$app->delete('/neumaticos/delete/{id}', function(Request $request, Response $response){
     
     $id = $request->getAttribute('id');
     $sql = "DELETE FROM stockneumaticos WHERE id =".$id;
@@ -127,7 +144,7 @@ $app->delete('/productos/neumaticos/delete/{id}', function(Request $request, Res
         $resultado->execute();
 
         if ($resultado->rowCount() > 0) {
-        echo '{"status":"200","message":"Articulo eliminado."}';  
+        echo '{"status":200,"message":"Articulo eliminado."}';  
         }else {
         echo '{"status":"404","message":"No existe Articulo con este ID."}';
         }
@@ -140,7 +157,7 @@ $app->delete('/productos/neumaticos/delete/{id}', function(Request $request, Res
 }); 
 
 // PUT Modificar Articulo 
-$app->put('/productos/neumaticos/modificar/{id}', function(Request $request, Response $response){
+$app->put('/neumaticos/modificar/{id}', function(Request $request, Response $response){
 
     $id = $request->getAttribute('id');
     $cod_Articulo = $request->getParam('cod_Articulo');
@@ -185,6 +202,7 @@ $app->put('/productos/neumaticos/modificar/{id}', function(Request $request, Res
         $resultado->bindParam(':ubicacion', $ubicacion);
 
         $resultado->execute();
+
         echo json_encode("Articulo modificado.");  
 
         $resultado = null;
