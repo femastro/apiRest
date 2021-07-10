@@ -166,10 +166,10 @@ $app->put('/neumaticos/modificar/{id}', function(Request $request, Response $res
     $medida = $request->getParam('medida');
     $cod_Proveedor = $request->getParam('cod_Proveedor');
     $cantidad = $request->getParam('cantidad');
-    $precio = $request->getParam('precio');
-    $precioventa = $request->getParam('precioventa');
-    $ultimocosto = $request->getParam('ultimocosto');
-    $ubicacion = $request->getParam('ubucacion');
+    $precio = 0;
+    $precioventa = 0;
+    $ultimocosto = 0;
+    $ubicacion = 0;
  
   
     $sql = "UPDATE stockneumaticos SET
