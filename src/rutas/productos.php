@@ -5,7 +5,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 $app = new \Slim\App;
 
 $app->get('/neumaticos', function(Request $request, Response $response){
-    $sql = "SELECT * FROM neumaticos LIMIT 5";
+    $sql = "SELECT * FROM neumaticos WHERE 1";
     try{
         $db = new db();
         $db = $db->conectDB();
@@ -34,7 +34,7 @@ $app->get('/neumaticos/{id}', function(Request $request, Response $response){
         $resultado = $db->query($sql);
 
         if ($resultado->rowCount() > 0){
-            $articulo = $resultado->fetchAll(PDO::FETCH_OBJ);
+            $articulo = $resultado->fetchAll(PDO::FETCH_ASSOC);
             echo json_encode($articulo);
         }else {
             echo json_encode("No existen articulos en la BBDD con este ID.");
