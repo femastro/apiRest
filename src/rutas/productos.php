@@ -5,7 +5,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 $app = new \Slim\App;
 
 $app->get('/neumaticos', function(Request $request, Response $response){
-    $sql = "SELECT * FROM neumaticos LIMIT 10";
+    $sql = "SELECT * FROM neumaticos LIMIT 5";
     try{
         $db = new db();
         $db = $db->conectDB();
