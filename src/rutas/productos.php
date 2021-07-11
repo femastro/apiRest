@@ -5,7 +5,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 $app = new \Slim\App;
 
 $app->get('/neumaticos', function(Request $request, Response $response){
-    $sql = "SELECT * FROM stockneumaticos";
+    $sql = "SELECT * FROM neumaticos LIMIT 10";
     try{
         $db = new db();
         $db = $db->conectDB();
@@ -27,7 +27,7 @@ $app->get('/neumaticos', function(Request $request, Response $response){
 // GET Recueperar Articulo por ID 
 $app->get('/neumaticos/{id}', function(Request $request, Response $response){
     $id = $request->getAttribute('id');
-    $sql = "SELECT * FROM stockneumaticos WHERE id =".$id;
+    $sql = "SELECT * FROM neumaticos WHERE idneumaticos =".$id;
     try{
         $db = new db();
         $db = $db->conectDB();
@@ -72,36 +72,24 @@ $app->post('/neumaticos/nuevo', function(Request $request, Response $response){
     $medida = $request->getParam('medida');
     $cod_Proveedor = $request->getParam('cod_Proveedor');
     $cantidad = $request->getParam('cantidad');
-    $precio = 0;
-    $precioventa = 0;
-    $ultimocosto = 0;
-    $ubicacion = 0;
   
-    $sql = "INSERT INTO stockneumaticos 
+    $sql = "INSERT INTO neumaticos 
         (   
         cod_articulo, 
-        modelo, 
         marca, 
+        modelo, 
         medida, 
         cod_Proveedor, 
         cantidad, 
-        precio, 
-        precioventa, 
-        ultimocosto, 
-        ubicacion
         )
         VALUES 
         (   
         :cod_Articulo, 
-        :modelo, 
         :marca, 
+        :modelo, 
         :medida, 
         :cod_Proveedor, 
         :cantidad, 
-        :precio, 
-        :precioventa, 
-        :ultimocosto, 
-        :ubicacion
         )";
     
     try{
@@ -115,10 +103,6 @@ $app->post('/neumaticos/nuevo', function(Request $request, Response $response){
         $resultado->bindParam(':medida', $medida);
         $resultado->bindParam(':cod_Proveedor', $cod_Proveedor);
         $resultado->bindParam(':cantidad', $cantidad);
-        $resultado->bindParam(':precio', $precio);
-        $resultado->bindParam(':precioventa', $precioventa);
-        $resultado->bindParam(':ultimocosto', $ultimocosto);
-        $resultado->bindParam(':ubicacion', $ubicacion);
 
         $resultado->execute();
         echo json_encode("Nuevo articulo guardado.");  
@@ -132,10 +116,10 @@ $app->post('/neumaticos/nuevo', function(Request $request, Response $response){
 });
 
 // DELETE borrar Articulo
-$app->delete('/neumaticos/delete/{id}', function(Request $request, Response $response){
+$app->delete('/neumaticos/delete/{idneumaticos}', function(Request $request, Response $response){
     
-    $id = $request->getAttribute('id');
-    $sql = "DELETE FROM stockneumaticos WHERE id =".$id;
+    $idneumaticos = $request->getAttribute('idneumaticos');
+    $sql = "DELETE FROM neumaticos WHERE idneumaticos =".$idneumaticos;
         
     try{
         $db = new db();
@@ -157,33 +141,24 @@ $app->delete('/neumaticos/delete/{id}', function(Request $request, Response $res
 }); 
 
 // PUT Modificar Articulo 
-$app->put('/neumaticos/modificar/{id}', function(Request $request, Response $response){
+$app->put('/neumaticos/modificar/{idneumaticos}', function(Request $request, Response $response){
 
-    $id = $request->getAttribute('id');
+    $idneumaticos = $request->getAttribute('idneumaticos');
     $cod_Articulo = $request->getParam('cod_Articulo');
     $modelo = $request->getParam('modelo');
     $marca = $request->getParam('marca');
     $medida = $request->getParam('medida');
     $cod_Proveedor = $request->getParam('cod_Proveedor');
     $cantidad = $request->getParam('cantidad');
-    $precio = 0;
-    $precioventa = 0;
-    $ultimocosto = 0;
-    $ubicacion = 0;
- 
   
-    $sql = "UPDATE stockneumaticos SET
+    $sql = "UPDATE neumaticos SET
             cod_Articulo = :cod_Articulo,
             modelo = :modelo,
             marca = :marca,
             medida = :medida,
             cod_Proveedor = :cod_Proveedor,
-            cantidad = :cantidad,
-            precio = :precio,
-            precioventa = :precioventa,
-            ultimocosto = :ultimocosto,
-            ubicacion = :ubicacion
-            WHERE id = ".$id;
+            cantidad = :cantidad 
+            WHERE idneumaticos = ".$idneumaticos;
         
     try{
         $db = new db();
@@ -196,10 +171,6 @@ $app->put('/neumaticos/modificar/{id}', function(Request $request, Response $res
         $resultado->bindParam(':medida', $medida);
         $resultado->bindParam(':cod_Proveedor', $cod_Proveedor);
         $resultado->bindParam(':cantidad', $cantidad);
-        $resultado->bindParam(':precio', $precio);
-        $resultado->bindParam(':precioventa', $precioventa);
-        $resultado->bindParam(':ultimocosto', $ultimocosto);
-        $resultado->bindParam(':ubicacion', $ubicacion);
 
         $resultado->execute();
 
