@@ -47,7 +47,7 @@ $app->get('/neumaticos/{idneumaticos}', function(Request $request, Response $res
 }); 
 
 // POST Crear nuevo Articulo 
-$app->post('/neumaticos/nuevo', function(Request $request, Response $response){
+$app->post('/neumaticos/new', function(Request $request, Response $response){
 
     $sql = "SELECT MAX(cod_Articulo) as codigo FROM neumaticos";
     try {
@@ -141,7 +141,7 @@ $app->delete('/neumaticos/delete/{idneumaticos}', function(Request $request, Res
 }); 
 
 // PUT Modificar Articulo 
-$app->put('/neumaticos/modificar/{idneumaticos}', function(Request $request, Response $response){
+$app->put('/neumaticos/update/{idneumaticos}', function(Request $request, Response $response){
 
     $idneumaticos = $request->getAttribute('idneumaticos');
     $cod_Articulo = $request->getParam('cod_Articulo');
