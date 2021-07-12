@@ -5,7 +5,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 $app = new \Slim\App;
 
 $app->get('/neumaticos', function(Request $request, Response $response){
-    $sql = "SELECT * FROM neumaticos WHERE 1 LIMIT 50";
+    $sql = "SELECT * FROM stockneumaticos WHERE 1 LIMIT 50";
     try{
         $db = new db();
         $db = $db->conectDB();
@@ -25,9 +25,9 @@ $app->get('/neumaticos', function(Request $request, Response $response){
 });
 
 // GET Recueperar Articulo por ID 
-$app->get('/neumaticos/{idneumaticos}', function(Request $request, Response $response){
-    $idneumaticos = $request->getAttribute('idneumaticos');
-    $sql = "SELECT * FROM neumaticos WHERE idneumaticos =".$idneumaticos;
+$app->get('/neumaticos/{id}', function(Request $request, Response $response){
+    $id = $request->getAttribute('id');
+    $sql = "SELECT * FROM stockneumaticos WHERE id =".$id;
     try{
         $db = new db();
         $db = $db->conectDB();
@@ -73,7 +73,7 @@ $app->post('/neumaticos/new', function(Request $request, Response $response){
     $cod_Proveedor = $request->getParam('cod_Proveedor');
     $cantidad = $request->getParam('cantidad');
   
-    $sql = "INSERT INTO neumaticos 
+    $sql = "INSERT INTO stockneumaticos 
         (   
         cod_articulo, 
         marca, 
@@ -116,10 +116,10 @@ $app->post('/neumaticos/new', function(Request $request, Response $response){
 });
 
 // DELETE borrar Articulo
-$app->delete('/neumaticos/delete/{idneumaticos}', function(Request $request, Response $response){
+$app->delete('/neumaticos/delete/{id}', function(Request $request, Response $response){
     
-    $idneumaticos = $request->getAttribute('idneumaticos');
-    $sql = "DELETE FROM neumaticos WHERE idneumaticos =".$idneumaticos;
+    $id = $request->getAttribute('id');
+    $sql = "DELETE FROM stockneumaticos WHERE id =".$id;
         
     try{
         $db = new db();
@@ -141,9 +141,9 @@ $app->delete('/neumaticos/delete/{idneumaticos}', function(Request $request, Res
 }); 
 
 // PUT Modificar Articulo 
-$app->put('/neumaticos/update/{idneumaticos}', function(Request $request, Response $response){
+$app->put('/neumaticos/update/{id}', function(Request $request, Response $response){
 
-    $idneumaticos = $request->getAttribute('idneumaticos');
+    $id = $request->getAttribute('id');
     $cod_Articulo = $request->getParam('cod_Articulo');
     $modelo = $request->getParam('modelo');
     $marca = $request->getParam('marca');
@@ -151,14 +151,14 @@ $app->put('/neumaticos/update/{idneumaticos}', function(Request $request, Respon
     $cod_Proveedor = $request->getParam('cod_Proveedor');
     $cantidad = $request->getParam('cantidad');
   
-    $sql = "UPDATE neumaticos SET
+    $sql = "UPDATE stockneumaticos SET
             cod_Articulo = :cod_Articulo,
             modelo = :modelo,
             marca = :marca,
             medida = :medida,
             cod_Proveedor = :cod_Proveedor,
             cantidad = :cantidad 
-            WHERE idneumaticos = ".$idneumaticos;
+            WHERE id = ".$id;
         
     try{
         $db = new db();
