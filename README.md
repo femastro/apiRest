@@ -1,5 +1,9 @@
 # apiRest
-Error 500 al consultar la api en el Host. 
-Al consultar la API , me devuelve error 500.
 
-cuando esta en localhost, funciona bien.
+Se debe crear dentro de /src un carpeta /config con la configuracion de conexion a la base de datos
+
+ej: 
+
+/src/config/db.php
+
+
