@@ -12,4 +12,7 @@ require '../src/config/db.php';
 // Ruta productos
 require '../src/rutas/productos.php';
 
+// Ruta Login
+require '../src/rutas/login.php';
+
 $app->run();
