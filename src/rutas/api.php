@@ -62,7 +62,7 @@ $app->post('/neumaticos/new', function(Request $request, Response $response){
             //$codigo = $articulo[0]['codigo'];
         }
     } catch (PDOException $e) {
-        echo "Error -> ",$e;
+        echo '{"error" : {"text":'.$e->getMessage().'}';
     }
     
     $cod= intval(substr($articulo[0]['codigo'], 1))+1;
@@ -203,6 +203,8 @@ $app->post('/login', function(Request $request, Response $response){
         if($resultado->rowCount() > 0 ){
             $user = $resultado->fetchAll(PDO::FETCH_OBJ);
             echo json_encode($user);
+        }else {
+            echo "Ha Ocurrido un Error !.";
         }
     } catch (PDOException $e) {
         echo "Error -> ",$e;
@@ -223,12 +225,12 @@ $app->get('/users', function(Request $request, Response $response){
             $users = $resultado->fetchAll(PDO::FETCH_OBJ);
             echo json_encode($users);
         }else {
-            echo json_encode("No existen articulos en la BBDD.");
+            echo "No existen usuarios en la BBDD.";
         }
         $resultado = null;
         $db = null;
     }catch(PDOException $e){
-        echo 'Error - > {"error" : {"text":'.$e->getMessage().'}';
+        echo '{"error" : {"text":'.$e->getMessage().'}';
     }
 });
 
@@ -244,7 +246,7 @@ $app->get('/users/{id}', function(Request $request, Response $response){
             $user = $resultado->fetchAll(PDO::FETCH_OBJ);
             echo json_encode($user);
         }else {
-            echo json_encode("No existen articulos en la BBDD con este ID.");
+            echo json_encode("No existen usuario en la BBDD con este ID.");
         }
         $resultado = null;
         $db = null;
