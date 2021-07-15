@@ -183,3 +183,27 @@ $app->put('/neumaticos/update/{id}', function(Request $request, Response $respon
     }
 }); 
 
+
+//// LOGIN
+
+$app->post('/login', function(Request $request, Response $response){
+
+    $usuario = $request->getParam('usuario');
+    $password = md5($request->getParam('password'));
+
+    $sql = "SELECT usuario, privilegios FROM usuarios WHERE usuario='".$usuario."' AND password='".$password."'";
+    
+    try {
+        $db = new db();
+        $db = $db->conectDB();
+        $resultado = $db->query($sql);
+
+        if($resultado->rowCount() > 0 ){
+            $user = $resultado->fetchAll(PDO::FETCH_OBJ);
+            echo json_encode($user);
+        }
+    } catch (PDOException $e) {
+        echo "Error -> ",$e;
+    }
+});
+

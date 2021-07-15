@@ -10,9 +10,7 @@ require '../vendor/autoload.php';
 require '../src/config/db.php';
 
 // Ruta productos
-require '../src/rutas/productos.php';
+require_once('../src/rutas/api.php');
 
-// Ruta Login
-require '../src/rutas/login.php';
 
 $app->run();
