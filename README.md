@@ -8,7 +8,7 @@ Se debe crear dentro de /src un carpeta /config con la configuracion de conexion
 
 /src/config/db.php
 
-########
+
 Archivo db.php
 
 <?php
