@@ -4,6 +4,8 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 $app = new \Slim\App;
 
+/// PRODUCTOS 
+
 $app->get('/neumaticos', function(Request $request, Response $response){
     $sql = "SELECT * FROM stockneumaticos WHERE 1 LIMIT 50";
     try{
