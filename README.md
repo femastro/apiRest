@@ -11,7 +11,7 @@ Se debe crear dentro de /src un carpeta /config con la configuracion de conexion
 
 Archivo db.php
 
-#-
+
     <?php
 
       class db{
