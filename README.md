@@ -11,23 +11,25 @@ Se debe crear dentro de /src un carpeta /config con la configuracion de conexion
 
 Archivo db.php
 
-##<?php
+#-
+    <?php
 
-class db{
+      class db{
+      
+        private $dbHost = "localhost";
+        private $dbName = "BDname";
 
-    private $dbHost = "localhost";
-    private $dbName = "BDname";
-
-    private $dbUser = "user.bd";
-    private $dbPass = "pass.bd";
+        private $dbUser = "user.bd";
+        private $dbPass = "pass.bd";
+        
+        //conección 
+        public function conectDB(){
+          $mysqlConnect = "mysql:host=$this->dbHost;dbname=$this->dbName";
+          $dbConnecion = new PDO($mysqlConnect, $this->dbUser, $this->dbPass);
+          $dbConnecion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          return $dbConnecion;
+        }
     
-    //conección 
-    public function conectDB(){
-      $mysqlConnect = "mysql:host=$this->dbHost;dbname=$this->dbName";
-      $dbConnecion = new PDO($mysqlConnect, $this->dbUser, $this->dbPass);
-      $dbConnecion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      return $dbConnecion;
-    }
-    
-  }
+      }
+
 
