@@ -207,3 +207,47 @@ $app->post('/login', function(Request $request, Response $response){
     }
 });
 
+
+//// USERS 
+
+$app->get('/users', function(Request $request, Response $response){
+    $sql = "SELECT * FROM usuarios WHERE 1";
+    try{
+        $db = new db();
+        $db = $db->conectDB();
+        $resultado = $db->query($sql);
+
+        if ($resultado->rowCount() > 0){
+            $users = $resultado->fetchAll(PDO::FETCH_OBJ);
+            echo json_encode($users);
+        }else {
+            echo json_encode("No existen articulos en la BBDD.");
+        }
+        $resultado = null;
+        $db = null;
+    }catch(PDOException $e){
+        echo 'Error - > {"error" : {"text":'.$e->getMessage().'}';
+    }
+});
+
+$app->get('/users/{id}', function(Request $request, Response $response){
+    $id = $request->getAttribute('id');
+    $sql = "SELECT * FROM usuarios WHERE idusuarios =".$id;
+    try{
+        $db = new db();
+        $db = $db->conectDB();
+        $resultado = $db->query($sql);
+
+        if ($resultado->rowCount() > 0){
+            $user = $resultado->fetchAll(PDO::FETCH_OBJ);
+            echo json_encode($user);
+        }else {
+            echo json_encode("No existen articulos en la BBDD con este ID.");
+        }
+        $resultado = null;
+        $db = null;
+    }catch(PDOException $e){
+        echo '{"error" : {"text":'.$e->getMessage().'}';
+    }
+}); 
+
