@@ -9,7 +9,7 @@ header("Access-Control-Allow-Methods: OPTIONS,GET,PUT,POST,DELETE");
 require '../vendor/autoload.php';
 require '../src/config/db.php';
 
-// Ruta productos
+// Rutas
 require_once('../src/rutas/api.php');
 
 
