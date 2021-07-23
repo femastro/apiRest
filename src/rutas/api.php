@@ -76,22 +76,34 @@ $app->post('/neumaticos/new', function(Request $request, Response $response){
     $cantidad = $request->getParam('cantidad');
   
     $sql = "INSERT INTO stockneumaticos 
-        (   
+        (
+        id,
         cod_articulo, 
         marca, 
         modelo, 
         medida, 
         cod_Proveedor, 
-        cantidad, 
+        cantidad,
+        precio,
+        precioventa,
+        fecha,
+        ultimocosto,
+        ubicacion
         )
         VALUES 
-        (   
+        (
+        null,
         :cod_Articulo, 
         :marca, 
         :modelo, 
         :medida, 
         :cod_Proveedor, 
-        :cantidad, 
+        :cantidad,
+        null,
+        null,
+        null,
+        null,
+        0
         )";
     
     try{
