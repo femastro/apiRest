@@ -46,8 +46,8 @@ $app->get('/all/marcas', function(Request $request, Response $response){
     }
 });
 
-$app->get('/all/modelo', function(Request $request, Response $response){
-    $sql = "SELECT DISTINCT(modelo) FROM neumaticos WHERE modelo != '' ORDER BY modelo ASC";
+$app->get('/all/modelos', function(Request $request, Response $response){
+    $sql = "SELECT DISTINCT(modelo) FROM neumaticos ORDER BY modelo ASC";
     try{
         $db = new db();
         $db = $db->conectDB();
@@ -66,7 +66,7 @@ $app->get('/all/modelo', function(Request $request, Response $response){
     }
 });
 
-$app->get('/all/medida', function(Request $request, Response $response){
+$app->get('/all/medidas', function(Request $request, Response $response){
     $sql = "SELECT DISTINCT(medida) FROM neumaticos WHERE medida != '' ORDER BY medida ASC";
     try{
         $db = new db();
@@ -91,7 +91,7 @@ $app->get('/all/medida', function(Request $request, Response $response){
 /// PRODUCTOS 
 
 $app->get('/neumaticos', function(Request $request, Response $response){
-    $sql = "SELECT * FROM stockneumaticos WHERE 1 LIMIT 50";
+    $sql = "SELECT id, cod_Articulo, marca, modelo, medida, cod_Proveedor, cantidad FROM stockneumaticos WHERE 1 LIMIT 50";
     try{
         $db = new db();
         $db = $db->conectDB();
@@ -113,7 +113,7 @@ $app->get('/neumaticos', function(Request $request, Response $response){
 // GET Recueperar Articulo por ID 
 $app->get('/neumaticos/{id}', function(Request $request, Response $response){
     $id = $request->getAttribute('id');
-    $sql = "SELECT * FROM stockneumaticos WHERE id =".$id;
+    $sql = "SELECT id, cod_Articulo, marca, modelo, medida, cod_Proveedor, cantidad FROM stockneumaticos WHERE id =".$id;
     try{
         $db = new db();
         $db = $db->conectDB();
