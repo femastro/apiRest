@@ -4,6 +4,90 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 $app = new \Slim\App;
 
+/// Tabla Neumaticos
+
+$app->get('/all', function(Request $request, Response $response){
+    $sql = "SELECT marca, modelo, medida FROM neumaticos WHERE 1 ";
+    try{
+        $db = new db();
+        $db = $db->conectDB();
+        $resultado = $db->query($sql);
+
+        if ($resultado->rowCount() > 0){
+            $articulos = $resultado->fetchAll(PDO::FETCH_OBJ);
+            echo json_encode($articulos);
+        }else {
+            echo json_encode("No existen articulos en la BBDD.");
+        }
+        $resultado = null;
+        $db = null;
+    }catch(PDOException $e){
+        echo 'Error - > {"error" : {"text":'.$e->getMessage().'}';
+    }
+});
+
+$app->get('/all/marcas', function(Request $request, Response $response){
+    $sql = "SELECT DISTINCT(marca) FROM neumaticos WHERE marca != '' ORDER BY marca ASC";
+    try{
+        $db = new db();
+        $db = $db->conectDB();
+        $resultado = $db->query($sql);
+
+        if ($resultado->rowCount() > 0){
+            $articulos = $resultado->fetchAll(PDO::FETCH_OBJ);
+            echo json_encode($articulos);
+        }else {
+            echo json_encode("No existen articulos en la BBDD.");
+        }
+        $resultado = null;
+        $db = null;
+    }catch(PDOException $e){
+        echo 'Error - > {"error" : {"text":'.$e->getMessage().'}';
+    }
+});
+
+$app->get('/all/modelo', function(Request $request, Response $response){
+    $sql = "SELECT DISTINCT(modelo) FROM neumaticos WHERE modelo != '' ORDER BY modelo ASC";
+    try{
+        $db = new db();
+        $db = $db->conectDB();
+        $resultado = $db->query($sql);
+
+        if ($resultado->rowCount() > 0){
+            $articulos = $resultado->fetchAll(PDO::FETCH_OBJ);
+            echo json_encode($articulos);
+        }else {
+            echo json_encode("No existen articulos en la BBDD.");
+        }
+        $resultado = null;
+        $db = null;
+    }catch(PDOException $e){
+        echo 'Error - > {"error" : {"text":'.$e->getMessage().'}';
+    }
+});
+
+$app->get('/all/medida', function(Request $request, Response $response){
+    $sql = "SELECT DISTINCT(medida) FROM neumaticos WHERE medida != '' ORDER BY medida ASC";
+    try{
+        $db = new db();
+        $db = $db->conectDB();
+        $resultado = $db->query($sql);
+
+        if ($resultado->rowCount() > 0){
+            $articulos = $resultado->fetchAll(PDO::FETCH_OBJ);
+            echo json_encode($articulos);
+        }else {
+            echo json_encode("No existen articulos en la BBDD.");
+        }
+        $resultado = null;
+        $db = null;
+    }catch(PDOException $e){
+        echo 'Error - > {"error" : {"text":'.$e->getMessage().'}';
+    }
+});
+
+
+
 /// PRODUCTOS 
 
 $app->get('/neumaticos', function(Request $request, Response $response){
@@ -51,7 +135,11 @@ $app->get('/neumaticos/{id}', function(Request $request, Response $response){
 // POST Crear nuevo Articulo 
 $app->post('/neumaticos/new', function(Request $request, Response $response){
 
-    $sql = "SELECT MAX(cod_Articulo) as codigo FROM neumaticos";
+    $marca = $request->getParam('marca');
+    $modelo = $request->getParam('modelo');
+    $medida = $request->getParam('medida');
+
+    $sql = "SELECT cod_Articulo, cod_Proveedor FROM neumaticos WHERE marca='".$marca."' AND modelo='".$modelo."' AND medida='".$medida."'";
     try {
         $db = new db();
         $db = $db->conectDB();
@@ -59,20 +147,22 @@ $app->post('/neumaticos/new', function(Request $request, Response $response){
 
         if($resultado->rowCount() > 0 ){
             $articulo = $resultado->fetchAll(PDO::FETCH_ASSOC);
-            //$codigo = $articulo[0]['codigo'];
         }
     } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e->getMessage().'}';
     }
     
-    $cod= intval(substr($articulo[0]['codigo'], 1))+1;
+    //$cod= intval(substr($articulo[0]['codigo'], 1))+1;
     //$cod_Articulo = $request->getParam('cod_Articulo');
-    $cod_Articulo = "N".$cod;
+    //$cod_Articulo = "N".$cod;
+    
+    $cod_Articulo = $articulo[0]['cod_Articulo'];
+    $cod_Proveedor = $articulo[0]['cod_Proveedor'];
 
-    $modelo = $request->getParam('modelo');
-    $marca = $request->getParam('marca');
-    $medida = $request->getParam('medida');
-    $cod_Proveedor = $request->getParam('cod_Proveedor');
+    if ($cod_Proveedor == ""){
+        $cod_Proveedor = $request->getParam('cod_Proveedor');
+    }
+
     $cantidad = $request->getParam('cantidad');
   
     $sql = "INSERT INTO stockneumaticos 
