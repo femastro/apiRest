@@ -45,8 +45,11 @@ $app->get('/all/marcas', function(Request $request, Response $response){
     }
 });
 
-$app->get('/all/modelos', function(Request $request, Response $response){
-    $sql = "SELECT DISTINCT(modelo) FROM neumaticos ORDER BY modelo ASC";
+$app->post('/all/modelos', function(Request $request, Response $response){
+
+    $marca = $request->getParam('marca');
+
+    $sql = "SELECT DISTINCT(modelo) FROM neumaticos WHERE marca = '".$marca."' ORDER BY modelo ASC";
     try{
         $db = new db();
         $db = $db->conectDB();
@@ -64,8 +67,12 @@ $app->get('/all/modelos', function(Request $request, Response $response){
     }
 });
 
-$app->get('/all/medidas', function(Request $request, Response $response){
-    $sql = "SELECT DISTINCT(medida) FROM neumaticos WHERE medida != '' ORDER BY medida ASC";
+$app->post('/all/medidas', function(Request $request, Response $response){
+
+    $marca = $request->getParam('marca');
+    $modelo = $request->getParam('modelo');
+
+    $sql = "SELECT DISTINCT(medida) FROM neumaticos WHERE marca = '".$marca."' AND modelo = '".$modelo."' ORDER BY medida ASC";
     try{
         $db = new db();
         $db = $db->conectDB();
