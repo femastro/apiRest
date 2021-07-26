@@ -95,7 +95,7 @@ $app->post('/all/medidas', function(Request $request, Response $response){
 /// PRODUCTOS 
 
 $app->get('/neumaticos', function(Request $request, Response $response){
-    $sql = "SELECT id, cod_Articulo, marca, modelo, medida, cod_Proveedor, cantidad FROM stockneumaticos WHERE 1 LIMIT 50";
+    $sql = "SELECT id, cod_Articulo, marca, modelo, medida, cod_Proveedor, cantidad FROM stockneumaticos ORDER BY cod_Articulo ASC";
     try{
         $db = new db();
         $db = $db->conectDB();
@@ -161,10 +161,10 @@ $app->post('/neumaticos/new', function(Request $request, Response $response){
     //$cod_Articulo = "N".$cod;
     
     $cod_Articulo = $articulo[0]['cod_Articulo'];
-    $cod_Proveedor = $articulo[0]['cod_Proveedor'];
+    $cod_Proveedor = $request->getParam('cod_Proveedor');
 
     if ($cod_Proveedor == ""){
-        $cod_Proveedor = $request->getParam('cod_Proveedor');
+        $cod_Proveedor = $articulo[0]['cod_Proveedor'];
     }
 
     $cantidad = $request->getParam('cantidad');
