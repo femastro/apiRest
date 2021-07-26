@@ -39,8 +39,7 @@ $app->get('/all/marcas', function(Request $request, Response $response){
         }else {
             echo json_encode("No existen articulos en la BBDD.");
         }
-        $resultado = null;
-        $db = null;
+
     }catch(PDOException $e){
         echo 'Error - > {"error" : {"text":'.$e->getMessage().'}';
     }
@@ -59,8 +58,7 @@ $app->get('/all/modelos', function(Request $request, Response $response){
         }else {
             echo json_encode("No existen articulos en la BBDD.");
         }
-        $resultado = null;
-        $db = null;
+
     }catch(PDOException $e){
         echo 'Error - > {"error" : {"text":'.$e->getMessage().'}';
     }
@@ -79,8 +77,7 @@ $app->get('/all/medidas', function(Request $request, Response $response){
         }else {
             echo json_encode("No existen articulos en la BBDD.");
         }
-        $resultado = null;
-        $db = null;
+
     }catch(PDOException $e){
         echo 'Error - > {"error" : {"text":'.$e->getMessage().'}';
     }
