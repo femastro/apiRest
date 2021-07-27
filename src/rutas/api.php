@@ -91,6 +91,29 @@ $app->post('/all/medidas', function(Request $request, Response $response){
 });
 
 
+/// Carga de Imagen
+
+$app->post('/imagen', function(Request $request, Response $response){
+
+    if (!empty($_FILES['file']['name']))
+    {
+        $ruta = "imgProducto/";
+        $nombre= $_FILES['file']['name'];
+
+        $ruta_provisional = $_FILES['file']['tmp_name'];
+        
+        if (!file_exists($ruta)){
+            mkdir($ruta, 0777, true);
+        }
+        $carpeta = $ruta.$nombre;
+        move_uploaded_file($ruta_provisional, $carpeta);
+
+        echo json_encode($carpeta);
+    }
+    
+
+    
+});
 
 /// PRODUCTOS 
 
@@ -213,7 +236,8 @@ $app->post('/neumaticos/new', function(Request $request, Response $response){
         $resultado->bindParam(':cantidad', $cantidad);
 
         $resultado->execute();
-        echo json_encode("Nuevo articulo guardado.");  
+
+        echo json_encode($cod_Articulo);  
 
         $resultado = null;
         $db = null;
