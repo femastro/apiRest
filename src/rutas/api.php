@@ -101,7 +101,7 @@ $app->post('/imagen', function(Request $request, Response $response){
         $nombre= $_FILES['file']['name'];
 
         $ruta_provisional = $_FILES['file']['tmp_name'];
-        
+
         if (!file_exists($ruta)){
             mkdir($ruta, 0777, true);
         }
@@ -191,59 +191,75 @@ $app->post('/neumaticos/new', function(Request $request, Response $response){
     }
 
     $cantidad = $request->getParam('cantidad');
-  
-    $sql = "INSERT INTO stockneumaticos 
-        (
-        id,
-        cod_articulo, 
-        marca, 
-        modelo, 
-        medida, 
-        cod_Proveedor, 
-        cantidad,
-        precio,
-        precioventa,
-        fecha,
-        ultimocosto,
-        ubicacion
-        )
-        VALUES 
-        (
-        null,
-        :cod_Articulo, 
-        :marca, 
-        :modelo, 
-        :medida, 
-        :cod_Proveedor, 
-        :cantidad,
-        null,
-        null,
-        null,
-        null,
-        0
-        )";
-    
-    try{
+
+    /// Consultar si el Articulo ya existe en la BD....
+    $sql = "SELECT cod_Articulo, cantidad FROM stockneumaticos WHERE cod_articulo ='".$cod_Articulo."'";
+    try {
         $db = new db();
         $db = $db->conectDB();
-        $resultado = $db->prepare($sql);
+        $resultado = $db->query($sql);
 
-        $resultado->bindParam(':cod_Articulo', $cod_Articulo);
-        $resultado->bindParam(':modelo', $modelo);
-        $resultado->bindParam(':marca', $marca);
-        $resultado->bindParam(':medida', $medida);
-        $resultado->bindParam(':cod_Proveedor', $cod_Proveedor);
-        $resultado->bindParam(':cantidad', $cantidad);
+        if($resultado->rowCount() > 0 ){
+            echo json_encode('El Articulo y Existe ! - Codigo : '.$cod_Articulo);
+        }else{
+            $sql = "INSERT INTO stockneumaticos 
+                (
+                id,
+                cod_articulo, 
+                marca, 
+                modelo, 
+                medida, 
+                cod_Proveedor, 
+                cantidad,
+                precio,
+                precioventa,
+                fecha,
+                ultimocosto,
+                ubicacion
+                )
+                VALUES 
+                (
+                null,
+                :cod_Articulo, 
+                :marca, 
+                :modelo, 
+                :medida, 
+                :cod_Proveedor, 
+                :cantidad,
+                null,
+                null,
+                null,
+                null,
+                0
+                )";
+            
+            try{
+                $db = new db();
+                $db = $db->conectDB();
+                $resultado = $db->prepare($sql);
 
-        $resultado->execute();
+                $resultado->bindParam(':cod_Articulo', $cod_Articulo);
+                $resultado->bindParam(':modelo', $modelo);
+                $resultado->bindParam(':marca', $marca);
+                $resultado->bindParam(':medida', $medida);
+                $resultado->bindParam(':cod_Proveedor', $cod_Proveedor);
+                $resultado->bindParam(':cantidad', $cantidad);
 
-        echo json_encode($cod_Articulo);  
+                $resultado->execute();
 
-        $resultado = null;
-        $db = null;
-    }catch(PDOException $e){
+                echo json_encode($cod_Articulo);  
+
+            }catch(PDOException $e){
+                echo '{"error" : {"text":'.$e->getMessage().'}';
+            }
+            $resultado = null;
+            $db = null;
+        }
+    } catch (PDOException $e) {
         echo '{"error" : {"text":'.$e->getMessage().'}';
     }
+  
+    
 
 });
 
