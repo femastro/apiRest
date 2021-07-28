@@ -93,19 +93,21 @@ $app->post('/all/medidas', function(Request $request, Response $response){
 
 /// Carga de Imagen
 
-$app->post('/imagen', function(Request $request, Response $response){
+$app->post('/imagen/{codigo}', function(Request $request, Response $response){
+
+    $name = $request->getAttribute('codigo').'.jpg';
 
     if (!empty($_FILES['file']['name']))
     {
         $ruta = "imgProducto/";
-        $nombre= $_FILES['file']['name'];
+        
 
         $ruta_provisional = $_FILES['file']['tmp_name'];
 
         if (!file_exists($ruta)){
             mkdir($ruta, 0777, true);
         }
-        $carpeta = $ruta.$nombre;
+        $carpeta = $ruta.$name;
         move_uploaded_file($ruta_provisional, $carpeta);
 
         echo json_encode($carpeta);
