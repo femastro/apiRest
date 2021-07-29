@@ -99,7 +99,7 @@ $app->post('/imagen/{codigo}', function(Request $request, Response $response){
 
     if (!empty($_FILES['file']['name']))
     {
-        $ruta = "../../aj.mastrosoft.com.ar/imgProducto/";
+        $ruta = "imgProducto/";
         
 
         $ruta_provisional = $_FILES['file']['tmp_name'];
