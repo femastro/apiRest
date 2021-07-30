@@ -306,14 +306,14 @@ $app->put('/neumaticos/update/{id}', function(Request $request, Response $respon
     $cantidad = $request->getParam('cantidad');
     $image = $request->getParam('image');
   
-  
     $sql = "UPDATE stockneumaticos SET
             cod_Articulo = :cod_Articulo,
             modelo = :modelo,
             marca = :marca,
             medida = :medida,
             cod_Proveedor = :cod_Proveedor,
-            cantidad = :cantidad 
+            cantidad = :cantidad,
+            image = :image 
             WHERE id = ".$id;
         
     try{
@@ -328,7 +328,6 @@ $app->put('/neumaticos/update/{id}', function(Request $request, Response $respon
         $resultado->bindParam(':cod_Proveedor', $cod_Proveedor);
         $resultado->bindParam(':cantidad', $cantidad);
         $resultado->bindParam(':image', $image);
-
 
         $resultado->execute();
 
