@@ -142,7 +142,7 @@ $app->get('/neumaticos', function(Request $request, Response $response){
 // GET Recueperar Articulo por ID 
 $app->get('/neumaticos/{id}', function(Request $request, Response $response){
     $id = $request->getAttribute('id');
-    $sql = "SELECT id, cod_Articulo, marca, modelo, medida, cod_Proveedor, cantidad FROM stockneumaticos WHERE id =".$id;
+    $sql = "SELECT id, cod_Articulo, marca, modelo, medida, cod_Proveedor, cantidad, image FROM stockneumaticos WHERE id =".$id;
     try{
         $db = new db();
         $db = $db->conectDB();
@@ -167,6 +167,7 @@ $app->post('/neumaticos/new', function(Request $request, Response $response){
     $marca = $request->getParam('marca');
     $modelo = $request->getParam('modelo');
     $medida = $request->getParam('medida');
+    $image = $request->getParam('image');
 
     $sql = "SELECT cod_Articulo, cod_Proveedor FROM neumaticos WHERE marca='".$marca."' AND modelo='".$modelo."' AND medida='".$medida."'";
     try {
@@ -217,7 +218,8 @@ $app->post('/neumaticos/new', function(Request $request, Response $response){
                 precioventa,
                 fecha,
                 ultimocosto,
-                ubicacion
+                ubicacion,
+                image
                 )
                 VALUES 
                 (
@@ -232,7 +234,8 @@ $app->post('/neumaticos/new', function(Request $request, Response $response){
                 null,
                 null,
                 null,
-                0
+                0,
+                :image
                 )";
             
             try{
@@ -246,10 +249,11 @@ $app->post('/neumaticos/new', function(Request $request, Response $response){
                 $resultado->bindParam(':medida', $medida);
                 $resultado->bindParam(':cod_Proveedor', $cod_Proveedor);
                 $resultado->bindParam(':cantidad', $cantidad);
+                $resultado->bindParam(':image', $image);
 
                 $resultado->execute();
 
-                echo json_encode($cod_Articulo);  
+                echo json_encode('Nuevo Articulo Agregado !');  
 
             }catch(PDOException $e){
                 echo '{"error" : {"text":'.$e->getMessage().'}';
@@ -300,6 +304,8 @@ $app->put('/neumaticos/update/{id}', function(Request $request, Response $respon
     $medida = $request->getParam('medida');
     $cod_Proveedor = $request->getParam('cod_Proveedor');
     $cantidad = $request->getParam('cantidad');
+    $image = $request->getParam('image');
+  
   
     $sql = "UPDATE stockneumaticos SET
             cod_Articulo = :cod_Articulo,
@@ -321,6 +327,8 @@ $app->put('/neumaticos/update/{id}', function(Request $request, Response $respon
         $resultado->bindParam(':medida', $medida);
         $resultado->bindParam(':cod_Proveedor', $cod_Proveedor);
         $resultado->bindParam(':cantidad', $cantidad);
+        $resultado->bindParam(':image', $image);
+
 
         $resultado->execute();
 
