@@ -142,7 +142,7 @@ $app->get('/neumaticos', function(Request $request, Response $response){
 // GET Recueperar Articulo por ID 
 $app->get('/neumaticos/{id}', function(Request $request, Response $response){
     $id = $request->getAttribute('id');
-    $sql = "SELECT id, cod_Articulo, marca, modelo, medida, cod_Proveedor, cantidad FROM stockneumaticos WHERE id =".$id;
+    $sql = "SELECT id, cod_Articulo, marca, modelo, medida, cod_Proveedor, cantidad, image FROM stockneumaticos WHERE id =".$id;
     try{
         $db = new db();
         $db = $db->conectDB();
