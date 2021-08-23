@@ -345,7 +345,7 @@ $app->put('/neumaticos/update/{id}', function(Request $request, Response $respon
 
 $app->post('/login', function(Request $request, Response $response){
 
-    $usuario = $request->getParam('usuario');
+    $usuario = $request->getParam('username');
     $password = md5($request->getParam('password'));
 
     $sql = "SELECT usuario, privilegios FROM usuarios WHERE usuario='".$usuario."' AND password='".$password."'";
