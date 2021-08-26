@@ -27,7 +27,9 @@ $app->get('/all', function(Request $request, Response $response){
 });
 
 $app->get('/all/marcas', function(Request $request, Response $response){
-    $sql = "SELECT DISTINCT(marca) FROM neumaticos WHERE marca != '' ORDER BY marca ASC";
+    $sql = "SELECT DISTINCT(marca) 
+            FROM neumaticos 
+            WHERE marca != '' ORDER BY marca ASC";
     try{
         $db = new db();
         $db = $db->conectDB();
@@ -49,7 +51,9 @@ $app->post('/all/modelos', function(Request $request, Response $response){
 
     $marca = $request->getParam('marca');
 
-    $sql = "SELECT DISTINCT(modelo) FROM neumaticos WHERE marca = '".$marca."' ORDER BY modelo ASC";
+    $sql = "SELECT DISTINCT(modelo) 
+            FROM neumaticos 
+            WHERE marca = '".$marca."' ORDER BY modelo ASC";
     try{
         $db = new db();
         $db = $db->conectDB();
@@ -72,7 +76,9 @@ $app->post('/all/medidas', function(Request $request, Response $response){
     $marca = $request->getParam('marca');
     $modelo = $request->getParam('modelo');
 
-    $sql = "SELECT DISTINCT(medida) FROM neumaticos WHERE marca = '".$marca."' AND modelo = '".$modelo."' ORDER BY medida ASC";
+    $sql = "SELECT DISTINCT(medida) 
+            FROM neumaticos 
+            WHERE marca = '".$marca."' AND modelo = '".$modelo."' ORDER BY medida ASC";
     try{
         $db = new db();
         $db = $db->conectDB();
@@ -120,7 +126,9 @@ $app->post('/imagen/{codigo}', function(Request $request, Response $response){
 /// PRODUCTOS 
 
 $app->get('/neumaticos', function(Request $request, Response $response){
-    $sql = "SELECT id, cod_Articulo, marca, modelo, medida, cod_Proveedor, cantidad FROM stockneumaticos ORDER BY cod_Articulo ASC";
+    $sql = "SELECT id, cod_Articulo, marca, modelo, medida, cod_Proveedor, cantidad 
+            FROM stockneumaticos 
+            ORDER BY cod_Articulo ASC";
     try{
         $db = new db();
         $db = $db->conectDB();
@@ -142,7 +150,8 @@ $app->get('/neumaticos', function(Request $request, Response $response){
 // GET Recueperar Articulo por ID 
 $app->get('/neumaticos/{id}', function(Request $request, Response $response){
     $id = $request->getAttribute('id');
-    $sql = "SELECT id, cod_Articulo, marca, modelo, medida, cod_Proveedor, cantidad, image FROM stockneumaticos WHERE id =".$id;
+    $sql = "SELECT id, cod_Articulo, marca, modelo, medida, cod_Proveedor, cantidad, image 
+            FROM stockneumaticos WHERE id =".$id;
     try{
         $db = new db();
         $db = $db->conectDB();
@@ -169,7 +178,9 @@ $app->post('/neumaticos/new', function(Request $request, Response $response){
     $medida = $request->getParam('medida');
     $image = $request->getParam('image');
 
-    $sql = "SELECT cod_Articulo, cod_Proveedor FROM neumaticos WHERE marca='".$marca."' AND modelo='".$modelo."' AND medida='".$medida."'";
+    $sql = "SELECT cod_Articulo, cod_Proveedor 
+            FROM neumaticos 
+            WHERE marca='".$marca."' AND modelo='".$modelo."' AND medida='".$medida."'";
     try {
         $db = new db();
         $db = $db->conectDB();
@@ -196,7 +207,9 @@ $app->post('/neumaticos/new', function(Request $request, Response $response){
     $cantidad = $request->getParam('cantidad');
 
     /// Consultar si el Articulo ya existe en la BD....
-    $sql = "SELECT cod_Articulo, cantidad FROM stockneumaticos WHERE cod_articulo ='".$cod_Articulo."'";
+    $sql = "SELECT cod_Articulo, cantidad 
+            FROM stockneumaticos 
+            WHERE cod_articulo ='".$cod_Articulo."'";
     try {
         $db = new db();
         $db = $db->conectDB();
@@ -348,7 +361,9 @@ $app->post('/login', function(Request $request, Response $response){
     $usuario = $request->getParam('username');
     $password = md5($request->getParam('password'));
 
-    $sql = "SELECT usuario, privilegios FROM usuarios WHERE usuario='".$usuario."' AND password='".$password."'";
+    $sql = "SELECT usuario, privilegios 
+            FROM usuarios 
+            WHERE usuario='".$usuario."' AND password='".$password."'";
     
     try {
         $db = new db();
