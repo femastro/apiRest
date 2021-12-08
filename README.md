@@ -6,32 +6,18 @@ Se debe crear dentro de /src un carpeta /config con la configuracion de conexion
 
 # Ej: 
 
-/src/config/db.php
+/src/config/env.php
 
 
-Archivo db.php
+Archivo env.php
 
 
     <?php
     
-      require "env.php";
-
-      class db{
+      const DBHOST = "hostName";
+      const DBNAME = "Name.DB";
       
-        private $dbHost = "DBHOST";
-        private $dbName = "BDname";
-
-        private $dbUser = "DBUSER";
-        private $dbPass = "DBPASSWORD";
-        
-        //conección 
-        public function conectDB(){
-          $mysqlConnect = "mysql:host=$this->dbHost;dbname=$this->dbName";
-          $dbConnecion = new PDO($mysqlConnect, $this->dbUser, $this->dbPass);
-          $dbConnecion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-          return $dbConnecion;
-        }
-    
-      }
+      const DBUSER = "User.DB";
+      const DBPASSWORD = "Password.DB";
 
 
