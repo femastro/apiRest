@@ -13,14 +13,16 @@ Archivo db.php
 
 
     <?php
+    
+      require "env.php";
 
       class db{
       
-        private $dbHost = "localhost";
+        private $dbHost = "DBHOST";
         private $dbName = "BDname";
 
-        private $dbUser = "user.bd";
-        private $dbPass = "pass.bd";
+        private $dbUser = "DBUSER";
+        private $dbPass = "DBPASSWORD";
         
         //conección 
         public function conectDB(){
