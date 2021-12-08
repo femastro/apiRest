@@ -4,11 +4,11 @@
 
   class db{
   
-    private $dbHost = "DBHOST";
-    private $dbName = "BDname";
+    private $dbHost = DBHOST;
+    private $dbName = BDNAME;
 
-    private $dbUser = "DBUSER";
-    private $dbPass = "DBPASSWORD";
+    private $dbUser = DBUSER;
+    private $dbPass = DBPASSWORD;
     
     //conección 
     public function conectDB(){
