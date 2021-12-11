@@ -5,7 +5,7 @@
   class db{
   
     private $dbHost = DBHOST;
-    private $dbName = BDNAME;
+    private $dbName = DBNAME;
 
     private $dbUser = DBUSER;
     private $dbPass = DBPASSWORD;
